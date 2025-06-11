@@ -1,3 +1,12 @@
+from helpers import clamp
+import pygame
+from constants import *
+import math
+
+# ─── Player ──────────────────────────────────────────────────────────────────
+class IllegalDirection(Exception):
+    pass
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, color):
         super().__init__()
@@ -8,6 +17,7 @@ class Player(pygame.sprite.Sprite):
         self.color     = color
         self.hand      = []
         self.program   = []
+        self.executed  = False
 
         self.image = pygame.Surface((TILE, TILE), pygame.SRCALPHA)
         self.rect  = self.image.get_rect(topleft=(x * TILE, y * TILE))
@@ -27,24 +37,31 @@ class Player(pygame.sprite.Sprite):
             pts.append((cx + r * math.cos(ang), cy + r * math.sin(ang)))
         pygame.draw.polygon(self.image, self.color, pts)
 
-    def move(self, dx, dy):
+    def move(self, dx, dy, ddir):
+        #boarded flytter spilleren
         # Try to move player by (dx, dy)
-        nx, ny = self.x + dx, self.y + dy
-        if 0 <= nx < W and 0 <= ny < H:
-            t = board.grid[ny][nx]
-            if not t.startswith('tile-wall'):
-                self.x, self.y = nx, ny
-                self.rect.topleft = (nx * TILE, ny * TILE)
+        #dx diff x, dy diff y
+        #nx new x, ny new y
+        oldDir = self.dir
+        self.x = clamp(self.x + dx, 0, W - 1)
+        self.y = clamp(self.y + dy, 0, H - 1)
+        #t = board.grid[ny][nx]
+        self.rect.topleft = (self.x * TILE, self.y * TILE)
+        self.dir = (self.dir + ddir) % 4
+        self._draw()
+            
+        print("oldDir: ", oldDir, "self.dir: ", self.dir)
 
     def moveForward(self, steps):
+        #rykker player med kort
         if self.dir == 0: # Direction: 0=up, 1=right, 2=down, 3=left
-            self.y -= steps
+            self.move(0, -steps, 0)
         elif self.dir == 1:
-            self.x += steps
+            self.move(steps, 0, 0)
         elif self.dir == 2:
-            self.y += steps
+            self.move(0, steps, 0)
         elif self.dir == 3:
-            self.x -= steps
+            self.move(-steps, 0, 0)
         else: 
             raise IllegalDirection()
         self.rect.topleft = (self.x * TILE, self.y * TILE)
