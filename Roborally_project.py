@@ -17,6 +17,9 @@ from helpers import clamp
 #TODO
 #rydde op
 #robot spiller
+#lave et formål/ en win condition
+#delay når man rykker sig
+#prøve eksamen
 
 # ─── Constants ────────────────────────────────────────────────────────────────
 TILE   = 90                     # Size of each tile in pixels
@@ -311,6 +314,9 @@ class Game:
             surface.blit(self.images[card.name], (x, y))
 
     def drawButtons(self, surface):
+        self.robot_img = pygame.image.load("happy_robot_run.png").convert_alpha()
+        self.robot_img = pygame.transform.scale(self.robot_img, (CARD_W - 50, CARD_H - 100))
+
         #run program knap
         player0 = next(iter(self.players))
         enableColor = (0, 0, 80)
@@ -321,7 +327,10 @@ class Game:
             actualColor = enableColor
         else:
             actualColor = disableColor
-        pygame.draw.rect(surface, actualColor, pygame.Rect(x + 25, y + 50, CARD_W - 50, CARD_H - 100))
+        buttonRect1 = pygame.Rect(x + 25, y + 50, CARD_W - 50, CARD_H - 100)
+        pygame.draw.rect(surface, actualColor, buttonRect1)
+        surface.blit(self.robot_img, buttonRect1)
+
         #new round knap
         x = CARD_W * (PROGRAM_LIMIT + 1)
         y = CARD_AREA_START_Y + CARD_H
@@ -329,7 +338,10 @@ class Game:
             actualColor = enableColor
         else:
             actualColor = disableColor
-        pygame.draw.rect(surface, actualColor, pygame.Rect(x + 25, y + 50, CARD_W - 50, CARD_H - 100))
+        
+        buttonRect2 = pygame.Rect(x + 25, y + 50, CARD_W - 50, CARD_H - 100)
+        pygame.draw.rect(surface, actualColor, buttonRect2)
+        surface.blit(self.robot_img, buttonRect2)
 
     def isCardClicked(self, pos):
         x, y = pos
