@@ -8,7 +8,7 @@ class IllegalDirection(Exception):
     pass
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, color):
+    def __init__(self, x, y, color, human=False):
         super().__init__()
         self.x, self.y = x, y
         self.dir       = 0        # Direction: 0=up, 1=right, 2=down, 3=left
@@ -18,6 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.hand      = []
         self.program   = []
         self.executed  = False
+        self.human     = human
 
         self.image = pygame.Surface((TILE, TILE), pygame.SRCALPHA)
         self.rect  = self.image.get_rect(topleft=(x * TILE, y * TILE))

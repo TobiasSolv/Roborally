@@ -28,8 +28,6 @@ EFFECT = {
 # ─── Game Board ──────────────────────────────────────────────────────────────
 class Board:
     def __init__(self, images):
-        global board
-        board = self
         self.images = images
 
         self.grid = [
@@ -106,8 +104,8 @@ class Board:
             cx = x + dx
             while 0 <= cx < W:
                 if self.grid[y][cx].startswith('tile-wall'): break
-                for p in players:
+                for i, p in enumerate(players):
                     if p.alive and (p.x, p.y) == (cx, y):
                         p.alive = False
-                        print(f"{p.name} zapped!")
+                        print(f"player {i} zapped!")
                 cx += dx

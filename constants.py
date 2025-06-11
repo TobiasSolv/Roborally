@@ -11,3 +11,4 @@ CARD_AREA_W = TILE * W
 CARD_AREA_H = CARD_H * 2
 SCREEN = (TILE * W, TILE * H + CARD_AREA_H)  # Window size including UI space
 PROGRAM_LIMIT = 5
+HAND_LIMIT = 9

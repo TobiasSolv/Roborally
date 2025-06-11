@@ -3,19 +3,8 @@ import random
 class Card:
     def __init__(self):
         pass
-    # have 9 kort og vælge fem 
-    # rykke frem 1
-    # rykke frem 2
-    # rykke frem 3
-    # rykke til højre
-    # rykke til venstre
-    # uturn 
-    # rykke tilbage 1
-    # 84 kort i alt 
-    # have prioritet 
-    # execute function
 
-    def execute(self, board, player):
+    def execute(self, _board, _player):
         pass
 
 def generateDeck():
@@ -37,7 +26,7 @@ class MoveForward(Card):
         self.steps = steps
 
 
-    def execute(self, board, player):
+    def execute(self, _board, player):
         player.moveForward(self.steps)
 
     def __str__(self):
@@ -49,7 +38,7 @@ class Turn(Card):
         self.name = name
         self.dir = dir
     
-    def execute(self, board, player):
+    def execute(self, _board, player):
         player.rotate(self.dir)
 
     def __str__(self):
