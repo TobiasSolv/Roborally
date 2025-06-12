@@ -1,5 +1,5 @@
 # ─── Constants ────────────────────────────────────────────────────────────────
-TILE   = 90                     # Size of each tile in pixels
+TILE   = 75                     # Size of each tile in pixels
 W, H   = 18, 8                  # Width and height of the board in tiles
 BG     = (40, 40, 50)           # Background color
 FPS    = 30                     # Frames per second

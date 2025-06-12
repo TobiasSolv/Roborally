@@ -29,6 +29,9 @@ TILES = [
     "tile-conveyor-1-turnRightFromLeft",
     "tile-conveyor-1-turnRightFromRight",
     "tile-conveyor-1-turnRightFromUp",
+    'tile-laser-1-overlay',
+    'tile-laser-1-start-overlay',
+
 ]
 
 CARDS = [
@@ -52,17 +55,13 @@ def load_images(tiles_path='tiles', cards_path='cards'):
         fn = os.path.join(cards_path, f"{name}.png")
         img = pygame.image.load(fn).convert_alpha()
         imgs[name] = pygame.transform.scale(img, (CARD_W, CARD_H))
-    for ov in ['tile-laser-1-overlay', 'tile-laser-1-start-overlay']:
-        fn = os.path.join(tiles_path, f"{ov}.png")
-        img = pygame.image.load(fn).convert_alpha()
-        imgs[ov] = pygame.transform.scale(img, (TILE, TILE))
     return imgs
 
 # ─── Game Loop ───────────────────────────────────────────────────────────────
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode(SCREEN)
+        self.screen = pygame.display.set_mode((SCREEN), pygame.RESIZABLE)
         pygame.display.set_caption("RoboRally Right Track")
         self.clock  = pygame.time.Clock()
         self.images = load_images('tiles')
@@ -150,11 +149,11 @@ class Game:
             return ("outside", None)
         
     def createNewRound(self):
-        self.deck = generateDeck()
+        self.deck = generateDeck() #84 kort
         for player in self.players:
             player.executed = False
-            player.hand = []
-            player.program = []
+            player.hand = [] #9 kort
+            player.program = [] #5 kort
         for _ in range(HAND_LIMIT):
             for player in self.players:
                 card = self.deck.pop()

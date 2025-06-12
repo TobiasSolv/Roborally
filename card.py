@@ -21,7 +21,6 @@ def generateDeck():
 
 class MoveForward(Card):
     def __init__(self, name, steps):
-        super().__init__()
         self.name = name
         self.steps = steps
 
@@ -34,7 +33,6 @@ class MoveForward(Card):
 
 class Turn(Card):
     def __init__(self, name, dir):
-        super().__init__()
         self.name = name
         self.dir = dir
     
